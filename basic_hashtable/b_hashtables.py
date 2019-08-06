@@ -16,7 +16,7 @@ class Pair:
 class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
-        self.hash_table = [None] * self.capacity
+        self.storage = [None] * capacity
 
 
 # '''
@@ -24,9 +24,13 @@ class BasicHashTable:
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
+    # 5381 is a prime number that resulted in fewer collisions
     hash_djb2 = 5381
+    # for each character in string
     for char in string:
+        # ord returning the char value in numeric
         hash_djb2 = (hash_djb2 * 33) + ord(char)
+    # using modulo so that the value is not very big or small
     return hash_djb2 % max
 
 
@@ -40,7 +44,16 @@ print(hash("Python", 12))
 
 
 def hash_table_insert(hash_table, key, value):
-    pass
+    index = hash(key, hash_table.capacity)
+    pair = Pair(key, value)
+    # if the bucket is not empty
+    if hash_table.storage[index] is not None:
+        if hash_table.storage[index].key != key:
+            # print warning
+            print(
+                f"Warning! Something is already written on this index.{hash_table.storage[index]} It's {value}")
+            # add a pair to hash_table
+    hash_table.storage[index] = pair
 
 
 # '''
@@ -48,8 +61,18 @@ def hash_table_insert(hash_table, key, value):
 
 # If you try to remove a value that isn't there, print a warning.
 # '''
+
+
 def hash_table_remove(hash_table, key):
-    pass
+    # use hash to get an index
+    index = hash(key, hash_table.capacity)
+    # check if value at index
+    # if yes print warning, return None
+    if hash_table.storage[index] is None or hash_table.storage[index].key != key:
+        print(f"Unable to remove item with the key{key}")
+    # else remove value, return value
+    else:
+        hash_table.storage[index] = None
 
 
 # '''
@@ -58,7 +81,15 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+    # key not found
+    if hash_table.storage[index] is None:
+        return None
+    elif hash_table.storage[index] is not None and hash_table.storage[index].key != key:
+        return None
+    # key found
+    else:
+        return hash_table.storage[index].value
 
 
 def Testing():
