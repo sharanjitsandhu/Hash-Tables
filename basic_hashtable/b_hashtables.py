@@ -11,11 +11,12 @@ class Pair:
 
 # '''
 # Basic hash table
-# Fill this in.  All storage values should be initialized to None
+# Fill this in. All storage values should be initialized to None
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.hash_table = [None] * self.capacity
 
 
 # '''
@@ -23,14 +24,21 @@ class BasicHashTable:
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
+    hash_djb2 = 5381
+    for char in string:
+        hash_djb2 = (hash_djb2 * 33) + ord(char)
+    return hash_djb2 % max
 
+
+print(hash("Python", 12))
 
 # '''
 # Fill this in.
 
 # If you are overwriting a value with a different key, print a warning.
 # '''
+
+
 def hash_table_insert(hash_table, key, value):
     pass
 
