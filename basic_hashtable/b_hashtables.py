@@ -48,6 +48,7 @@ def hash_table_insert(hash_table, key, value):
     pair = Pair(key, value)
     # if the bucket is not empty
     if hash_table.storage[index] is not None:
+        # checking every single key
         if hash_table.storage[index].key != key:
             # print warning
             print(
